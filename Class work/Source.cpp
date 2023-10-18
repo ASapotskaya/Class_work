@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<conio.h>
 #include<thread>
 
@@ -11,8 +11,8 @@ using namespace std;
 #define MAX_TANK_VOLUME	160
 class Tank
 {
-	const int VOLUME;	//Характеристика объекта
-	double fuel_level;	//Состояние объекта
+	const int VOLUME;	//РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєР° РѕР±СЉРµРєС‚Р°
+	double fuel_level;	//РЎРѕСЃС‚РѕСЏРЅРёРµ РѕР±СЉРµРєС‚Р°
 public:
 	int get_VOLUME()const
 	{
@@ -78,12 +78,12 @@ public:
 	}
 	void set_consumption_per_second(int speed)
 	{
-		if (speed == 0)consumption_per_second = CONSUMPTION_PER_SEC; //3*10 в  -5 степени
+		if (speed == 0)consumption_per_second = CONSUMPTION_PER_SEC; //3*10 РІ  -5 СЃС‚РµРїРµРЅРё
 		else if (0 < speed && speed <= 60)consumption_per_second = CONSUMPTION_PER_SEC * 6.7;
 		else if (60 < speed && speed <= 100)consumption_per_second = CONSUMPTION_PER_SEC * 4.7;
 		else if (100 < speed && speed <= 140)consumption_per_second = CONSUMPTION_PER_SEC * 6.7;
 		else if (140 < speed && speed <= 200)consumption_per_second = CONSUMPTION_PER_SEC * 8.4;
-		else if (speed > 200)consumption_per_second = CONSUMPTION_PER_SEC * 10;//3 * 10 в -5й степени
+		else if (speed > 200)consumption_per_second = CONSUMPTION_PER_SEC * 10;//3 * 10 РІ -5Р№ СЃС‚РµРїРµРЅРё
 	}
 	void start()
 	{
@@ -115,9 +115,9 @@ public:
 	}
 	void info()const
 	{
-		cout << "Расход на 100 км.:  " << CONSUMPTION << " л." << endl;
-		cout << "Расход за 1 секунду: " << consumption_per_second << " л." << endl;
-		cout << "Двигатель " << (is_started ? "запущен" : "остановлен") << endl;
+		cout << "Р Р°СЃС…РѕРґ РЅР° 100 РєРј.:  " << CONSUMPTION << " Р»." << endl;
+		cout << "Р Р°СЃС…РѕРґ Р·Р° 1 СЃРµРєСѓРЅРґСѓ: " << consumption_per_second << " Р»." << endl;
+		cout << "Р”РІРёРіР°С‚РµР»СЊ " << (is_started ? "Р·Р°РїСѓС‰РµРЅ" : "РѕСЃС‚Р°РЅРѕРІР»РµРЅ") << endl;
 	}
 };
 
@@ -135,12 +135,12 @@ class Car
 	bool driver_inside;
 	struct
 	{
-		std::thread panel_thread;			//в этом потоке будет запусткаться метод Panel();
+		std::thread panel_thread;			//РІ СЌС‚РѕРј РїРѕС‚РѕРєРµ Р±СѓРґРµС‚ Р·Р°РїСѓСЃС‚РєР°С‚СЊСЃСЏ РјРµС‚РѕРґ Panel();
 		std::thread engine_idle_thread;
-		std::thread free_wheeling_thread;	//силы трения
+		std::thread free_wheeling_thread;	//СЃРёР»С‹ С‚СЂРµРЅРёСЏ
 	} threads;
 	//Treads threads;
-	bool busy;	//управление занято
+	bool busy;	//СѓРїСЂР°РІР»РµРЅРёРµ Р·Р°РЅСЏС‚Рѕ
 public:
 	Car(Engine engine, Tank tank, int max_speed = 250, int accelleration = 10) :
 
@@ -172,15 +172,15 @@ public:
 	{
 		driver_inside = true;
 		threads.panel_thread = std::thread(&Car::panel, this);
-		//std::thread(...) - создаем объект класса 'thread' (создаем поток)
-		//&Car::panel - указатель на метод (member-function), который будет выполняться в потоке.
-		//Для того чтобы в потоке запустит метод, нужно так же указать для какого объекта будет выполняться этот метод
+		//std::thread(...) - СЃРѕР·РґР°РµРј РѕР±СЉРµРєС‚ РєР»Р°СЃСЃР° 'thread' (СЃРѕР·РґР°РµРј РїРѕС‚РѕРє)
+		//&Car::panel - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РјРµС‚РѕРґ (member-function), РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ РІС‹РїРѕР»РЅСЏС‚СЊСЃСЏ РІ РїРѕС‚РѕРєРµ.
+		//Р”Р»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ РІ РїРѕС‚РѕРєРµ Р·Р°РїСѓСЃС‚РёС‚ РјРµС‚РѕРґ, РЅСѓР¶РЅРѕ С‚Р°Рє Р¶Рµ СѓРєР°Р·Р°С‚СЊ РґР»СЏ РєР°РєРѕРіРѕ РѕР±СЉРµРєС‚Р° Р±СѓРґРµС‚ РІС‹РїРѕР»РЅСЏС‚СЊСЃСЏ СЌС‚РѕС‚ РјРµС‚РѕРґ
 	}
 	void get_out()
 	{
 		system("CLS");
 		driver_inside = false;
-		//Потоки принято синхронизировать. Метод join() синхронизирует потоки
+		//РџРѕС‚РѕРєРё РїСЂРёРЅСЏС‚Рѕ СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ. РњРµС‚РѕРґ join() СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚ РїРѕС‚РѕРєРё
 		if (threads.panel_thread.joinable())threads.panel_thread.join();
 		//https://legacy.cplusplus.com/reference/thread/thread/join/
 		//https://legacy.cplusplus.com/reference/thread/thread/joinable/
@@ -227,9 +227,9 @@ public:
 		char key;
 		do
 		{
-			key = 0;	//сбрасываем нажатую клавишу
-			if (_kbhit())	//Функция _kbhit() возвращает 'true' при нажатии любой клавиши.
-				key = _getch();	//Ожидает нажатия клавиши, и возвращает ASCII-код нажатой клавиши
+			key = 0;	//СЃР±СЂР°СЃС‹РІР°РµРј РЅР°Р¶Р°С‚СѓСЋ РєР»Р°РІРёС€Сѓ
+			if (_kbhit())	//Р¤СѓРЅРєС†РёСЏ _kbhit() РІРѕР·РІСЂР°С‰Р°РµС‚ 'true' РїСЂРё РЅР°Р¶Р°С‚РёРё Р»СЋР±РѕР№ РєР»Р°РІРёС€Рё.
+				key = _getch();	//РћР¶РёРґР°РµС‚ РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё, Рё РІРѕР·РІСЂР°С‰Р°РµС‚ ASCII-РєРѕРґ РЅР°Р¶Р°С‚РѕР№ РєР»Р°РІРёС€Рё
 			switch (key)
 			{
 			case Enter:	driver_inside ? get_out() : get_in();	break;
@@ -237,14 +237,14 @@ public:
 			case 'f':
 				if (driver_inside)
 				{
-					cout << "Для начала выйдите из машины!";
+					cout << "Р”Р»СЏ РЅР°С‡Р°Р»Р° РІС‹Р№РґРёС‚Рµ РёР· РјР°С€РёРЅС‹!";
 					break;
 				}
 				double fuel;
-				cout << "Введите желаемый объем топлива: "; cin >> fuel;
+				cout << "Р’РІРµРґРёС‚Рµ Р¶РµР»Р°РµРјС‹Р№ РѕР±СЉРµРј С‚РѕРїР»РёРІР°: "; cin >> fuel;
 				tank.fill(fuel);
 				break;
-			case 'I':	//Ignition - зажигание
+			case 'I':	//Ignition - Р·Р°Р¶РёРіР°РЅРёРµ
 			case 'i':	if (driver_inside)engine.started() ? stop() : start();	break;
 			case 'W':
 			case 'w':	if (!busy)accelerate();
@@ -319,29 +319,29 @@ public:
 	}
 };
 
-//Deep copy - побитовое копирование
-//Shallow copy - поверхностное копирование
+//Deep copy - РїРѕР±РёС‚РѕРІРѕРµ РєРѕРїРёСЂРѕРІР°РЅРёРµ
+//Shallow copy - РїРѕРІРµСЂС…РЅРѕСЃС‚РЅРѕРµ РєРѕРїРёСЂРѕРІР°РЅРёРµ
 
 //#define TANK_CHECK
-//Директива #define (определить) создает макроопределение
+//Р”РёСЂРµРєС‚РёРІР° #define (РѕРїСЂРµРґРµР»РёС‚СЊ) СЃРѕР·РґР°РµС‚ РјР°РєСЂРѕРѕРїСЂРµРґРµР»РµРЅРёРµ
 //#define ENGINE_CHECK
 
 void main()
 {
 	setlocale(LC_ALL, "");
 
-#ifdef TANK_CHECK		//показывает начало блока кода
-	//Если определено 'TANK_CHECK', то нижеследующий код будет виден компилятору:
+#ifdef TANK_CHECK		//РїРѕРєР°Р·С‹РІР°РµС‚ РЅР°С‡Р°Р»Рѕ Р±Р»РѕРєР° РєРѕРґР°
+	//Р•СЃР»Рё РѕРїСЂРµРґРµР»РµРЅРѕ 'TANK_CHECK', С‚Рѕ РЅРёР¶РµСЃР»РµРґСѓСЋС‰РёР№ РєРѕРґ Р±СѓРґРµС‚ РІРёРґРµРЅ РєРѕРјРїРёР»СЏС‚РѕСЂСѓ:
 	Tank tank(20);
 	tank.info();
 	while (true)
 	{
 		double fuel;
-		cout << "Введите объем топлива: "; cin >> fuel;
+		cout << "Р’РІРµРґРёС‚Рµ РѕР±СЉРµРј С‚РѕРїР»РёРІР°: "; cin >> fuel;
 		tank.fill(fuel);
 		tank.info();
 	}
-#endif // TANK_CHECK	//показывает конец блока кода
+#endif // TANK_CHECK	//РїРѕРєР°Р·С‹РІР°РµС‚ РєРѕРЅРµС† Р±Р»РѕРєР° РєРѕРґР°
 
 #ifdef ENGINE_CHECK
 	Engine engine(10);
